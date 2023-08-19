@@ -1,6 +1,9 @@
 # EmailScaper
 Hacking Email Scaper
 
+pip install beautifulsoup4
+pip install requests
+
 Input 
 1. url misalnya : https://dinamika.ac.id/
 2. limit : 100 (Untuk mempercepat proses agar semunya tidak discan)
