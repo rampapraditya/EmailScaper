@@ -34,22 +34,25 @@ try:
 
             try:
                 response = requests.get(url)
+
+                new_emails = set(re.findall(r'[a-z0-9\.\-+_]+@\w+\.+[A-Z\.]+', response.text, re.I))
+                emails.update(new_emails)
+    
+                soup = BeautifulSoup(response.text, 'html.parser')
+                for anchor in soup.find_all('a'):
+                    link = anchor.attrs['href'] if 'href' in anchor.attrs else ''
+                    if link.startswith('/'):
+                        link = base_url + link
+                    elif not link.startswith('http'):
+                        link = path + link
+    
+                    if not link in urls and not link in scraped_urls:
+                        urls.append(link)
+                    
             except(requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
                 pass
 
-            new_emails = set(re.findall(r'[a-z0-9\.\-+_]+@\w+\.+[A-Z\.]+', response.text, re.I))
-            emails.update(new_emails)
-
-            soup = BeautifulSoup(response.text, 'html.parser')
-            for anchor in soup.find_all('a'):
-                link = anchor.attrs['href'] if 'href' in anchor.attrs else ''
-                if link.startswith('/'):
-                    link = base_url + link
-                elif not link.startswith('http'):
-                    link = path + link
-
-                if not link in urls and not link in scraped_urls:
-                    urls.append(link)
+           
 
         else:
             print("Empty deque");
