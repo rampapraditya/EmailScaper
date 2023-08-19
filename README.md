@@ -1,7 +1,8 @@
 # EmailScaper
 Hacking Email Scaper
 
-pip install beautifulsoup4
+pip install beautifulsoup4 
+
 pip install requests
 
 Input 
